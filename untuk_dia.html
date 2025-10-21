@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buat Kamu ❤️</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef, #ff9a9e);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            font-size: 2.5rem;
+            color: #e91e63;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .heart-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(238, 90, 82, 0.4);
+            margin: 10px;
+        }
+
+        .heart-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(238, 90, 82, 0.6);
+        }
+
+        .message-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: scale(0);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .message-box.show {
+            transform: scale(1);
+        }
+
+        .message-text {
+            font-size: 1.3rem;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff6b6b;
+            pointer-events: none;
+            animation: floatUp 3s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-200px) rotate(360deg);
+            }
+        }
+
+        .cute-emoji {
+            font-size: 3rem;
+            margin: 20px 0;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .question-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .answer-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .yes-button {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .no-button {
+            background: linear-gradient(45deg, #f44336, #da190b);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
+            position: relative;
+        }
+
+        .yes-button:hover, .no-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .final-message {
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .final-message.show {
+            display: block;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .answer-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Hai Cantik! 💕</h1>
+            <p class="subtitle">Ada yang mau aku kasih tau nih...</p>
+            <button class="heart-button" onclick="showMessage()">Klik aku dong! ❤️</button>
+        </div>
+
+        <div id="messageBox" class="message-box">
+            <div class="cute-emoji">🥰</div>
+            <p class="message-text">Tau gak sih... setiap kali liat kamu, jantung aku selalu deg-degan kayak lagi naik roller coaster! 🎢</p>
+            <button class="heart-button" onclick="showNextMessage()">Lanjut dong... 💖</button>
+        </div>
+
+        <div id="messageBox2" class="message-box">
+            <div class="cute-emoji">😍</div>
+            <p class="message-text">Senyum kamu itu kayak matahari yang bisa bikin hari aku jadi cerah banget! ☀️✨</p>
+            <button class="heart-button" onclick="showQuestion()">Aww... terus? 💕</button>
+        </div>
+
+        <div id="questionSection" class="question-section" style="display: none;">
+            <div class="cute-emoji">🙈</div>
+            <h2 style="color: #e91e63; margin-bottom: 20px;">Pertanyaan penting nih...</h2>
+            <p class="message-text">Mau gak jadi yang spesial di hidup aku? 💝</p>
+            <div class="answer-buttons">
+                <button class="yes-button" onclick="showFinalMessage()">Mau dong! 💕</button>
+                <button class="no-button" id="noButton" onclick="moveButton()">Gak mau 😤</button>
+            </div>
+        </div>
+
+        <div id="finalMessage" class="final-message">
+            <div class="cute-emoji">🎉</div>
+            <h2 style="color: #fff; margin-bottom: 20px;">Yeayyyy! 🥳</h2>
+            <p style="color: #fff; font-size: 1.3rem; line-height: 1.6;">
+                Aku janji bakal jadi yang terbaik buat kamu! 
+                Makasih udah mau jadi bagian dari cerita indah kita ya! 💕✨
+            </p>
+            <div style="margin-top: 30px;">
+                <span style="font-size: 2rem;">🌟💖🌟💖🌟</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let messageStep = 0;
+        let noButtonClicks = 0;
+
+        function showMessage() {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.classList.add('show');
+            createFloatingHearts();
+        }
+
+        function showNextMessage() {
+            const messageBox2 = document.getElementById('messageBox2');
+            messageBox2.classList.add('show');
+            createFloatingHearts();
+        }
+
+        function showQuestion() {
+            const questionSection = document.getElementById('questionSection');
+            questionSection.style.display = 'block';
+            setTimeout(() => {
+                questionSection.classList.add('show');
+            }, 100);
+            createFloatingHearts();
+        }
+
+        function showFinalMessage() {
+            const finalMessage = document.getElementById('finalMessage');
+            finalMessage.classList.add('show');
+            createManyHearts();
+            
+            // Scroll to final message
+            finalMessage.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function moveButton() {
+            const noButton = document.getElementById('noButton');
+            const messages = [
+                "Yakin gak mau? 🥺",
+                "Aku sedih nih... 😢",
+                "Please... 🙏",
+                "Aku janji baik kok! 😇",
+                "Coba klik yang iya dong! 💕"
+            ];
+            
+            noButtonClicks++;
+            
+            if (noButtonClicks < messages.length) {
+                noButton.textContent = messages[noButtonClicks - 1];
+            }
+            
+            // Move button to random position
+            const container = document.querySelector('.answer-buttons');
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noButton.getBoundingClientRect();
+            
+            const maxX = containerRect.width - buttonRect.width;
+            const maxY = containerRect.height - buttonRect.height;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noButton.style.position = 'absolute';
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+            
+            // After 5 clicks, make it harder to click
+            if (noButtonClicks >= 5) {
+                noButton.style.transform = 'scale(0.8)';
+                noButton.textContent = "Udah deh, klik yang iya aja! 😅";
+            }
+        }
+
+        function createFloatingHearts() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.innerHTML = '💖';
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.top = window.innerHeight + 'px';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 200);
+            }
+        }
+
+        function createManyHearts() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.innerHTML = ['💖', '💕', '💗', '💝', '❤️'][Math.floor(Math.random() * 5)];
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.top = window.innerHeight + 'px';
+                    heart.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+
+        // Add some random floating hearts periodically
+        setInterval(() => {
+            if (Math.random() < 0.3) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '💕';
+                heart.style.left = Math.random() * window.innerWidth + 'px';
+                heart.style.top = window.innerHeight + 'px';
+                heart.style.fontSize = '1.5rem';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000);
+            }
+        }, 2000);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9920bdc40347ea76',t:'MTc2MTA0OTU2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
